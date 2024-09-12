@@ -1,0 +1,6 @@
+
+Steps to perform after downloading the project from github
+
+npm install
+npm run build
+npm run start
