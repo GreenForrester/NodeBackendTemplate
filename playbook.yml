@@ -26,3 +26,12 @@
         repository: bsaadi/greenforrester #Can replace this github variable
         tag: ${{ image_tag }}
         push: yes
+
+    - name: Tag image for GitHub Container Registry
+      command: docker tag ${{ secrets.DOCKER_USERNAME }}/{{ project_name }}-image:${{ image_tag }} ghcr.io/${{ secrets.GITHUB_USERNAME }}/{{ project_name }}-image:${{ image_tag }}
+    
+    - name: Push image to GitHub Container Registry
+      docker_image:
+        name: ghcr.io/${{ secrets.GITHUB_USERNAME }}/{{ project_name }}-image:${{ image_tag }}
+        tag: ${{ image_tag }}
+        push: yes 
