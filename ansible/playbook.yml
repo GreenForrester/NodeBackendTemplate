@@ -13,8 +13,12 @@
         msg: "DOCKER_USERNAME and DOCKER_PASSWORD must be defined and not empty."
 
     - name: Print a debug message
-      ansible.builtin.debug:
-       msg: DOCKER_USERNAME
+      debug:
+        msg: DOCKER_USERNAME is {{ DOCKER_USERNAME }}
+        
+    - name: Print a debug message
+      debug:
+        msg: DOCKER_PASSWORD is {{ DOCKER_PASSWORD }}
 
     - name: Login to Docker Hub (adjust for private registry)
       docker_login:
