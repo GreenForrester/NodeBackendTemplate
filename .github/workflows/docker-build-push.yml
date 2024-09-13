@@ -6,11 +6,10 @@ on:
     tags:
       - "v*"
 
-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,6 +23,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install ansible
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install Docker
+        run: |
+          docker --version
+          sudo apt-get update
+          sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
       - name: Install Docker
         run: |
