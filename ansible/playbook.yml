@@ -15,15 +15,11 @@
     - name: Print a debug message
       debug:
         msg: DOCKER_USERNAME is {{ DOCKER_USERNAME }}
-        
-    - name: Print a debug message
-      debug:
-        msg: DOCKER_PASSWORD is {{ DOCKER_PASSWORD }}
 
     - name: Login to Docker Hub (adjust for private registry)
       docker_login:
-        username: ${{ DOCKER_USERNAME }}
-        password: ${{ DOCKER_PASSWORD }}
+        username: bsaadi
+        password: {{ secrets.DOCKER_PASSWORD }}
         
     - name: Build Docker image
       docker_image:
