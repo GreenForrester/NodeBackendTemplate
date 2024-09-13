@@ -29,5 +29,5 @@ jobs:
           ansible-playbook ansible/playbook.yml \
             -e image_tag=${{ github.ref_name }} \
             -e project_name=${{ github.repository.name }} \ # Pass project name
-            -i localhost,
+            -i localhost, -c local
         continue-on-error: false # Stop the workflow on Ansible playbook failure
