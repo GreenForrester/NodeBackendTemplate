@@ -25,6 +25,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install ansible
 
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+
       - name: Run Ansible Playbook
         run: "ansible-playbook ansible/playbook.yml \
             -e image_tag=${{ github.ref_name }} \

@@ -2,12 +2,6 @@
 - hosts: localhost
   become: true
   tasks:
-    - name: Install Docker if not present
-      apt:
-        name: docker.io
-        state: present
-        update_cache: yes
-
     - name: Login to Docker Hub (adjust for private registry)
       docker_login:
         username: ${{ secrets.DOCKER_USERNAME }}
