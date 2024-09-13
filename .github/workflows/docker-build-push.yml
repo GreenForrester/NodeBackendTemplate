@@ -25,9 +25,8 @@ jobs:
           pip install ansible
 
       - name: Run Ansible Playbook
-        run: |
-          ansible-playbook ansible/playbook.yml \
+        run: "ansible-playbook ansible/playbook.yml \
             -e image_tag=${{ github.ref_name }} \
-            -e project_name=${{ github.repository.name }} \ # Pass project name
-            -i localhost, -c local
+            -e project_name=${{ github.repository.name }} \
+            -i localhost, -c local"
         continue-on-error: false # Stop the workflow on Ansible playbook failure
