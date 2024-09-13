@@ -2,10 +2,21 @@
 - hosts: localhost
   become: true
   tasks:
+
+    - name: Check if Docker credentials are provided
+      assert:
+        that:
+          - DOCKER_USERNAME is defined
+          - DOCKER_USERNAME != ''
+          - DOCKER_PASSWORD is defined
+          - DOCKER_PASSWORD != ''
+        msg: "DOCKER_USERNAME and DOCKER_PASSWORD must be defined and not empty."
+
     - name: Login to Docker Hub (adjust for private registry)
       docker_login:
         username: ${{ DOCKER_USERNAME }}
         password: ${{ DOCKER_PASSWORD }}
+        msg: username
         
     - name: Build Docker image
       docker_image:
