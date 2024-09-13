@@ -36,5 +36,8 @@ jobs:
         run: "ansible-playbook ansible/playbook.yml \
             -e image_tag=${{ github.ref_name }} \
             -e project_name=${{ github.repository.name }} \
+            -e DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} \
+            -e DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }} \
+            -e GITHUB_USERNAME=${{ github.actor }} \
             -i localhost, -c local"
         continue-on-error: false # Stop the workflow on Ansible playbook failures

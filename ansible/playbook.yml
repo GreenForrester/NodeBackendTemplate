@@ -4,25 +4,25 @@
   tasks:
     - name: Login to Docker Hub (adjust for private registry)
       docker_login:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{ DOCKER_USERNAME }}
+        password: ${{ DOCKER_PASSWORD }}
         
     - name: Build Docker image
       docker_image:
         path: ./
-        tag:  ${{ secrets.DOCKER_USERNAME }}/{{ project_name }}-image:${{ image_tag }}
+        tag:  ${{ DOCKER_USERNAME }}/{{ project_name }}-image:${{ image_tag }}
         buildargs:
           # Add any build arguments from your Dockerfile if needed
 
     - name: Push image to Docker Hub (adjust for private registry)
       docker_image:
-        name: ${{ secrets.DOCKER_USERNAME }}/{{ project_name }}-image:${{ image_tag }}
+        name: ${{ DOCKER_USERNAME }}/{{ project_name }}-image:${{ image_tag }}
         repository: bsaadi/greenforrester #Can replace this github variable
         tag: ${{ image_tag }}
         push: yes
 
     - name: Tag image for GitHub Container Registry
-      command: docker tag ${{ secrets.DOCKER_USERNAME }}/{{ project_name }}-image:${{ image_tag }} ghcr.io/${{ secrets.GITHUB_USERNAME }}/{{ project_name }}-image:${{ image_tag }}
+      command: docker tag ${{ secrets.GITHUB_USERNAME }}/{{ project_name }}-image:${{ image_tag }} ghcr.io/${{ secrets.GITHUB_USERNAME }}/{{ project_name }}-image:${{ image_tag }}
     
     - name: Push image to GitHub Container Registry
       docker_image:
