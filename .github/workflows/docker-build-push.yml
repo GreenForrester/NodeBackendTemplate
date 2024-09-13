@@ -1,0 +1,27 @@
+name: Build and Push Docker Image
+
+on:
+  release:
+    types: [created]
+    tags: 
+      - 'v*' # Trigger on releases with tags starting with 'v' (e.g., v1.0.0)
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Ansible
+        uses: geerzy/ansible-action@main
+        with:
+          version: latest
+
+      - name: Run Ansible Playbook
+        run: |
+          ansible-playbook ansible/playbook.yml \
+            -e image_tag=${{ github.ref_name }} \
+            -e project_name=${{ github.repository.name }} \ # Pass project name
+            -i localhost,
