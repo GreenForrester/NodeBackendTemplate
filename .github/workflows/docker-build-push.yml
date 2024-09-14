@@ -27,17 +27,21 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Install Docker # This workflow is provisioning docker pre-installed
+      - name: Install Docker # docker pre-installed on git runner
         run: |
           docker --version
           sudo apt-get update
 
-      - name: Run Ansible Playbook
-        run: "ansible-playbook ansible/playbook.yml \
-            -e image_tag=${{ github.ref_name }} \
-            -e project_name=${{ github.repository.name }} \
-            -e DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} \
-            -e DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }} \
-            -e GITHUB_USERNAME=${{ github.actor }} \
-            -i localhost, -c local"
-        continue-on-error: false # Stop the workflow on Ansible playbook failures
+      #generate code to login to docker hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}  
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: . # Use the root of your repository as the build context
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.repository_name }} # Replace with your Docker Hub username and image name
