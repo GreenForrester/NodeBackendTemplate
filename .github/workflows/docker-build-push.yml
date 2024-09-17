@@ -61,5 +61,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          #tags: ghcr.io/greenforrester/nodebackendtemplate:${{ github.run_number }}
+          #tags: ${{ steps.meta.outputs.tags }}
+          tags: ghcr.io/greenforrester/nodebackendtemplate:${{ github.run_number }}
